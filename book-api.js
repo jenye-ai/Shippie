@@ -40,6 +40,8 @@ let users = [{
     "power": "user" 
 }];
 
+var currentUser = null;
+
 
 app.use(cors());
 
@@ -82,6 +84,7 @@ app.get('/user', (req, res) => {
     res.json(users);
 });
 
+// USER FUNCTIONS (Login)
 app.post('/login', (req, res) => {
     const userLogin = req.body.username
     const passLogin = req.body.password
@@ -90,7 +93,8 @@ app.post('/login', (req, res) => {
         if (i.username === userLogin) {
             
             //if users.password === passLogin:
-            
+            currentUser = userLogin
+
             //res.sendFile(__dirname + '/book-list.html');
             res.redirect("http://localhost:3000/orders");
             return;
@@ -101,10 +105,25 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/orders', (req, res) => {
-    res.sendFile(__dirname + '/book-list.html');
+    for (let i of users) {
+        if (i.username === currentUser) {
+            if (i.power === "admin"){
+                res.sendFile(__dirname + '/book-list.html');
+
+            }
+            else {
+                res.sendFile(__dirname + '/book-list.html');
+            }
+            
+            return;
+           
+        }
+    }
+    
+    
 });
 
-// BOOK FUNCTIONS
+// ********** BOOK FUNCTIONS *************
 app.get('/book/:isbn', (req, res) => {
     // reading isbn from the URL
     const isbn = req.params.isbn;
@@ -171,5 +190,7 @@ app.post('/book/:isbn', (req, res) => {
     // sending 404 when not found something is a good practice
     res.send('Book is edited');
 });
+// *****************
+
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
