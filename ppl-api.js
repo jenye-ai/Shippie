@@ -31,18 +31,14 @@ app.get('/', (req, res) => {
 });
 
 app.post('/user', (req, res) => {
-    const name = req.params.username;
+    const name = req.body.username;
     for (let person of ppl) {
-        console.log(person);
         if (person.username === name) {
-            // console.log(person.username);
             if (person.power === "admin"){
-                res.send('admin');
-                // res.sendFile(__dirname + '/link-child1.html');
+                res.redirect("http://google.com");
             }
             if (person.power === "user"){
-                res.send('user');
-                // res.sendFile(__dirname + '/link-child2.html');
+                res.redirect("http://youtube.com");
             }
         }
     }
