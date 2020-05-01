@@ -8,7 +8,7 @@ const port = 3000
 let books = [{
     "isbn": "9781593275846",
     "title": "Eloquent JavaScript, Second Edition",
-    "author": "Marijn Haverbeke",
+    "author": "jennifer",
     "publish_date": "2014-12-14",
     "publisher": "No Starch Press",
     "numOfPages": 472,
@@ -30,30 +30,62 @@ let books = [{
     "numOfPages": 460,
 }];
 
+let users = [{
+    "username": "jennifer",
+    "password": "1234",
+    "power": "admin" 
+}, {
+    "username": "shivani",
+    "password": "5678",
+    "power": "user" 
+}];
+
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
+// HOME PAGE
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/home.html');
 });
 
-app.post('/book', (req, res) => {
-    const book = req.body;
+// USER FUNCTIONS (REGISTRATION)
+app.get('/user/:username', (req, res) => {
+    // reading isbn from the URL
+    const username = req.params.username;
 
-    // output the book to the console for debugging
-    console.log(book);
-    books.push(book);
+    // searching users for the username
+    for (let username of users) {
+        if (users.username === username) {
+            res.json(username);
+            return;
+        }
+    }
 
-    res.send('Book is added to the database');
+    // sending 404 when not found something is a good practice
+    res.status(404).send('User not found');
 });
 
-app.get('/book', (req, res) => {
-    res.json(books);
+app.post('/user', (req, res) => {
+    const user = req.body;
+
+    // output the user to the console for debugging
+    console.log(user);
+    users.push(user);
+
+    res.send('User is added to the database');
 });
 
+app.get('/user', (req, res) => {
+    res.json(users);
+});
+
+
+
+
+
+// BOOK FUNCTIONS
 app.get('/book/:isbn', (req, res) => {
     // reading isbn from the URL
     const isbn = req.params.isbn;
@@ -69,6 +101,22 @@ app.get('/book/:isbn', (req, res) => {
     // sending 404 when not found something is a good practice
     res.status(404).send('Book not found');
 });
+
+
+app.post('/book', (req, res) => {
+    const book = req.body;
+
+    // output the book to the console for debugging
+    console.log(book);
+    books.push(book);
+
+    res.send('Book is added to the database');
+});
+
+app.get('/book', (req, res) => {
+    res.json(books);
+});
+
 
 app.delete('/book/:isbn', (req, res) => {
     // reading isbn from the URL
@@ -92,7 +140,7 @@ app.post('/book/:isbn', (req, res) => {
     const isbn = req.params.isbn;
     const newBook = req.body;
 
-    // remove item from the books array
+    // add item to the book array
     for (let i = 0; i < books.length; i++) {
         let book = books[i]
 
