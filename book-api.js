@@ -40,6 +40,7 @@ let users = [{
     "power": "user" 
 }];
 
+
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -81,9 +82,27 @@ app.get('/user', (req, res) => {
     res.json(users);
 });
 
+app.post('/login', (req, res) => {
+    const userLogin = req.body.username
+    const passLogin = req.body.password
 
+    for (let i of users) {
+        if (i.username === userLogin) {
+            
+            //if users.password === passLogin:
+            
+            //res.sendFile(__dirname + '/book-list.html');
+            res.redirect("http://localhost:3000/orders");
+            return;
+        }
+    }
 
+    res.send(`User Not Found; Username/Password Incorrect`);
+});
 
+app.get('/orders', (req, res) => {
+    res.sendFile(__dirname + '/book-list.html');
+});
 
 // BOOK FUNCTIONS
 app.get('/book/:isbn', (req, res) => {
