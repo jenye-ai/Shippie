@@ -15,9 +15,9 @@
     <div class="container">
         <hr>
         <h1>List of Groups</h1>
-        <div class="col-4">
-            <button type="button" class="btn btn-primary" onClick = "addGroup()">Add Group</button>
-        </div>
+
+        <button type="button" class="btn btn-primary" onClick = "addGroup()">Create New</button>
+
         <hr>
 
         <div>
@@ -28,7 +28,7 @@
 
     
 
-    <div id="editBookModal" class="modal" tabindex="-1" role="dialog">
+    <!-- <div id="editBookModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -56,7 +56,7 @@
 
             </div>
         </div>
-    </div>
+    </div> -->
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -68,18 +68,16 @@
         }
 
         const addGroup = () => {
-        
-            const xhttp = new XMLHttpRequest();
 
-            xhttp.open("POST", `http://localhost:8000/group`, false);
-            xhttp.send();
+            const user =  ((window.location.href).toString()).replace('http://localhost:8000/groups/','');
 
-            document.getElementById('admin_name').value = admin_name;
-
-            // setting up the action url for the book
-            //document.getElementById('editForm').action = `http://localhost:8000/book/${isbn}`;
-            
+            var form = document.createElement('form');
+            form.action = "http://localhost:8000/group/create/" + user
+            form.method = 'GET';
+            form.submit();
+    
         }
+        
 
         const deleteGroup = (id) => {
             const xhttp = new XMLHttpRequest();

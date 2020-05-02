@@ -178,7 +178,7 @@ app.get('/group/:id', (req, res) => {
 
     // searching books for the isbn
     for (let group of groups) {
-        if (group.id === id) {
+        if (group.id == id) {
             res.json(group);
             return;
         }
@@ -187,6 +187,33 @@ app.get('/group/:id', (req, res) => {
     // sending 404 when not found something is a good practice
     res.status(404).send('Book not found');
 });
+
+
+
+app.get('/group/create/:username', (req, res) => {
+
+    // output the book to the console for debugging
+    const username = req.params.username;
+    group = {}
+
+    group["id"] = groupId ;
+    groupId = groupId +1;
+    group["admin_name"] = username;
+
+    group["orders"] = [];
+    
+    console.log(group);
+    groups.push(group);
+
+    //res.send('Group is added to the database');
+
+    res.redirect("http://localhost:8000/groups/"+ username);
+
+
+});
+
+
+
 
 //adds a group
 app.post('/group', (req, res) => {
@@ -205,14 +232,14 @@ app.get('/group', (req, res) => {
     res.json(groups);
 });
 
-// Delets a group
+// Deletes a group
 app.delete('/group/:id', (req, res) => {
     // reading isbn from the URL
     const id = req.params.id;
 
     // remove item from the groups array
     groups = groups.filter(i => {
-        if (i.id !== id) {
+        if (i.id != id) {
             return true;
         }
 
@@ -224,76 +251,6 @@ app.delete('/group/:id', (req, res) => {
     res.send('Group is deleted');
 });
 
-// ********** BOOK FUNCTIONS *************
-//returns list of book with isbn
-app.get('/item/:id', (req, res) => {
-    // reading isbn from the URL
-    const isbn = req.params.isbn;
 
-    // searching books for the isbn
-    for (let book of books) {
-        if (book.isbn === isbn) {
-            res.json(book);
-            return;
-        }
-    }
-
-    // sending 404 when not found something is a good practice
-    res.status(404).send('Book not found');
-});
-
-// Adds a book
-app.post('/book', (req, res) => {
-    const book = req.body;
-
-    // output the book to the console for debugging
-    console.log(book);
-    books.push(book);
-
-    res.send('Book is added to the database');
-});
-
-//returns list of all books
-app.get('/book', (req, res) => {
-    res.json(books);
-});
-
-// Delets a book
-app.delete('/book/:isbn', (req, res) => {
-    // reading isbn from the URL
-    const isbn = req.params.isbn;
-
-    // remove item from the books array
-    books = books.filter(i => {
-        if (i.isbn !== isbn) {
-            return true;
-        }
-
-        return false;
-    });
-
-    // sending 404 when not found something is a good practice
-    res.send('Book is deleted');
-});
-
-// Edits a book
-app.post('/book/:isbn', (req, res) => {
-    // reading isbn from the URL
-    const isbn = req.params.isbn;
-    const newBook = req.body;
-
-    // add item to the book array
-    for (let i = 0; i < books.length; i++) {
-        let book = books[i]
-
-        if (book.isbn === isbn) {
-            books[i] = newBook;
-        }
-    }
-
-    // sending 404 when not found something is a good practice
-    res.send('Book is edited');
-});
-// *****************
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
