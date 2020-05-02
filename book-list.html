@@ -5,12 +5,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-
+    <title>Group Order</title>
+    <link rel="shortcut icon" href="">
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./book-list.css">
 </head>
 
 <body>
+
+    <div class="container">
+        <hr>
+        <h1>Owner's Cart</h1>
+        <hr>
+
+        <div class="row">
+            <div class="col-6">
+                <h3>Sephora, Canada</h3>
+
+                <div class="progress">
+                    <div class="progress-bar bg-warning zero-width" role="progressbar" id="progress-bar-length"
+                        aria-valuenow=10 aria-valuemin="0" aria-valuemax="100" style="width:70%"></div>
+                </div>
+                <div class="row money_progress">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <p>$</p>
+                    <p id="contributions">70</p>
+                    <p>/$</p>
+                    <p id="totalAmount">100</p>
+                </div>
+
+                <div class="contribution-box">
+                    <p class="contributor-name">Contributor: Shivani Chidella</p>
+
+                    <form action="http://localhost:3000/add_item" method="POST">
+                        <div class="row">
+                            <div class="form-group">
+                                <input for="item-URL" class="form-control url-input" type="text" name="url"
+                                    placeholder="Your Product URL...">
+                            </div>
+                            <div class="form-group">
+                                <input for="item-price" class="form-control price-input" type="text" name="url"
+                                    placeholder="$0.00">
+                            </div>
+                            <button id="add-b" class="btn btn-primary add-item" type="submit">ADD ITEM</button>
+                        </div>
+                    </form>
+
+                    <div id="product-list" class="product-list">
+                        <div class="col-12">
+                            <div id="product" class="product">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <div class="url">Product: </div>
+                                        <div class="price">Price: </div>
+                                    </div>
+                                    <div class="col-2"><button id="remove-b" class="btn delete-item">X</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="row contributor-total">
+                        <p>TOTAL: </p>&nbsp;
+                        <p>$</p>
+                        <p id="contributorTotal">0.00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="pickup-details">
+                    <p class="purple-header">PICKUP FROM OWNER</p>
+                    <p class="b1"> detailssss</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="container">
         <hr>
         <h1>List of books</h1>
@@ -75,7 +148,83 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <script src="book-list.js"></script>
+    <script>
+
+        const setEditModal = (isbn) => {
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.open("GET", `http://localhost:8000/book/${isbn}`, false);
+            xhttp.send();
+
+            const book = JSON.parse(xhttp.responseText);
+
+            const {
+                title, 
+                author, 
+                publisher, 
+                publish_date,
+                numOfPages
+            } = book;
+
+            document.getElementById('isbn').value = isbn;
+            document.getElementById('title').value = title;
+            document.getElementById('author').value = author;
+            document.getElementById('publisher').value = publisher;
+            document.getElementById('publish_date').value = publish_date;
+            document.getElementById('numOfPages').value = numOfPages;
+
+            // setting up the action url for the book
+            document.getElementById('editForm').action = `http://localhost:8000/book/${isbn}`;
+        }
+
+        const deleteBook = (isbn) => {
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.open("DELETE", `http://localhost:8000/book/${isbn}`, false);
+            xhttp.send();
+
+            location.reload();
+        }
+
+        const loadBooks = () => {
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.open("GET", "http://localhost:8000/book", false);
+            xhttp.send();
+
+            const books = JSON.parse(xhttp.responseText);
+
+            for (let book of books) {
+                const x = `
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">${book.title}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">${book.isbn}</h6>
+
+                                <div>Author: ${book.author}</div>
+                                <div>Publisher: ${book.publisher}</div>
+                                <div>Number Of Pages: ${book.numOfPages}</div>
+
+                                <hr>
+
+                                <button type="button" class="btn btn-danger" onClick = "deleteBook(${book.isbn})">Delete</button>
+                                <button types="button" class="btn btn-primary" data-toggle="modal" 
+                                    data-target="#editBookModal" onClick="setEditModal(${book.isbn})">
+                                    Edit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `
+
+                document.getElementById('books').innerHTML = document.getElementById('books').innerHTML + x;
+            }
+        }
+
+        loadBooks();
+    </script>
+    
 </body>
 
 </html>

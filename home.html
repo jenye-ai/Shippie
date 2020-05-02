@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create New Book</title>
+    <title>GroupOrder</title>
+    <link rel="shortcut icon" href="">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
@@ -15,48 +16,49 @@
         <hr>
         <h1>Welcome To GroupOrder!</h1>
         <hr>
+        <br><br>
 
-        <div>
-            <div class="row" id="books">
+        <div class="row">
+            <div class="col-6">
+                <h3>Create An Account:</h3>
+                <form action="http://localhost:8000/user" method="POST">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Username</label>
+                        <input class="form-control" name="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input class="form-control" name="password">
+                    </div>
+
+                    <!-- <div class="form-group">
+                    <label for="exampleInputPassword1">Power</label>
+                    <input class="form-control" name="power">
+                </div> -->
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+            <div class="col-6">
+                <h3>Login:</h3>
+                <form action="http://localhost:8000/login" method="POST">
+                    <div class="form-group">
+                        <label for="userlogin">Username</label>
+                        <input class="form-control" name="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passlogin">Password</label>
+                        <input class="form-control" name="password">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
         </div>
     </div>
-
-    <div id="login" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Login</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                        <form id="editForm" method="POST">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Username</label>
-                                <input class="form-control" name="username" id="username">
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input class="form-control" name="password" id="password">
-                            </div>
-                
-                            <button type="submit" class="btn btn-primary">Login</button>
-                        </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    <script src="login-signup.js"></script>
-
 </body>
 
 </html>
