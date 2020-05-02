@@ -40,10 +40,6 @@
     margin-left: 0.5rem;
 }
 
-.product-list{
-    list-style-type: none;
-    margin-left: 2rem;
-}
 .product{
     border: 1px solid lightgrey;
     background-color: lightgrey;
@@ -51,6 +47,7 @@
     height: 75px;
     border-radius: 8px;
     margin-bottom: 10px;
+    margin-left: 2rem
 }
 .url{
     color: #5e5e5e;

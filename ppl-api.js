@@ -58,7 +58,8 @@ let groups = [{
                 "price": 130,
             }],
         }],
-    },{
+    }
+    ,{
     "group_id": 2,
     "admin_name": "shi",
     "orders":[
@@ -103,10 +104,10 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/home.html');
 });
 
-//return list of books
-app.get('/groups/:username/:group_id/user', (req, res) => {
-    const display_username = req.params.username;
-    const display_group_id = req.params.group_id;
+//return list of items
+app.get('/groups/:displayusername/:displaygroupid/user', (req, res) => {
+    const display_username = req.params.displayusername.toString();
+    const display_group_id = parseInt(req.params.displaygroupid);
 
     for (let i = 0; i < groups.length; i++) {
         let group = groups[i];
@@ -119,7 +120,6 @@ app.get('/groups/:username/:group_id/user', (req, res) => {
             }    
         }
     }
-    res.send("got nothing here");
 });
 
 //add
@@ -160,6 +160,7 @@ app.delete('/groups/:username/:group_id/user/:item_id', (req, res) => {
     const delete_username = req.params.username;
     const delete_group_id = req.params.group_id;
     const delete_item_id = req.params.item_id;
+    console.log(req.params);
 
     //reach in to items
     for (let i = 0; i < groups.length; i++) {

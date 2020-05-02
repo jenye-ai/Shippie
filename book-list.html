@@ -37,8 +37,8 @@
 
                 <div class="contribution-box">
                     <p class="contributor-name">Contributor: Shivani Chidella</p>
-
-                    <form action="http://localhost:8000/add_item" method="POST">
+<!-- edit here -->
+                    <form action="http://localhost:8000/add_item" method="POST"> 
                         <div class="row">
                             <div class="form-group">
                                 <input for="item-URL" class="form-control url-input" type="text" name="url"
@@ -52,8 +52,11 @@
                         </div>
                     </form>
 
-                    <div id="display_items"> <!--changed here -->
-                    </div>
+ <!--changed here -->
+                        <div class="col-12" id="display_items">
+                            
+                        </div>
+
 
                     <br>
                     <div class="row contributor-total">
@@ -63,84 +66,23 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <!-- <div class="col-4">
                 <div class="pickup-details">
                     <p class="purple-header">PICKUP FROM OWNER</p>
                     <p class="b1"> detailssss</p>
                 </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container">
-        <hr>
-        <h1>List of books</h1>
-        <hr>
-
-        <div>
-            <div class="row" id="books">
-            </div>
-        </div>
-    </div>
-
-    <div id="editBookModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Book</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                        <form id="editForm" method="POST">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">ISBN</label>
-                                <input class="form-control" name="isbn" id="isbn">
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Title</label>
-                                <input class="form-control" name="title" id="title">
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Author</label>
-                                <input class="form-control" name="author" id="author">
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Published Date</label>
-                                <input type="date" class="form-control" name="publish_date" id="publish_date">
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Publisher</label>
-                                <input class="form-control" name="publisher" id="publisher">
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Number Of Pages</label>
-                                <input type="number" class="form-control" name="numOfPages" id="numOfPages">
-                            </div>
-                
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                </div>
-
-            </div>
+            </div> -->
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script>
-        const deleteBook = (delete_id) => {
+        const deleteItem = (delete_id,username,groupid) => {
+            alert('1');
             const xhttp = new XMLHttpRequest();
 
-            xhttp.open("DELETE", `http://localhost:8000//groups/${username}/${group_id}/user/${delete_id}`, false);
+            xhttp.open("DELETE", `http://localhost:8000/groups/${username}/${groupid}/user/${delete_id}`, false);
             xhttp.send();
 
             location.reload();
@@ -148,37 +90,34 @@
 
         const loadItems = () => {
             //jen's get info from url code
-            const username = anton;
-            const group_id = 2;
-            alert("3");
+            const displayusername = "anton";
+            const displaygroupid = 1;
+            
             const xhttp = new XMLHttpRequest();
-            xhttp.open("GET", `http://localhost:8000/groups/${username}/${group_id}/user`, false);
+        
+            xhttp.open("GET", `http://localhost:8000/groups/${displayusername}/${displaygroupid}/user`, false);
             xhttp.send();
             const items = JSON.parse(xhttp.responseText);
 
             for (let item of items) {
+                const deletedata = [item.id, displayusername, displaygroupid];
+                // alert(deletedata.toString());
                 const x = `
-                    <div class="product-list">
-                        <div class="col-12">
-                            <div id="product" class="product">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <div class="url">Product: ${item.url}</div>
-                                        <div class="price">Price: ${item.price}</div>
-                                    </div>
-                                    <div class="col-2"><button id="remove-b" class="btn delete-item" onClick = "deleteBook(${item.id})">X</button></div>
+                    <div id="product" class="product">
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="url">Product: ${item.url}</div>
+                                    <div class="price">Price: ${item.price}</div>
                                 </div>
-                            </div>
+                            <div class="col-2"><button id="remove-b" class="btn delete-item" onClick="deleteItem(${item.id},${displayusername},${displaygroupid})">X</button></div>
                         </div>
                     </div>
                 `
-
-                document.getElementById('books').innerHTML = document.getElementById('books').innerHTML + x;
+                document.getElementById('display_items').innerHTML = document.getElementById('display_items').innerHTML + x;
             }
         }
-        // alert("1");
+
         loadItems();
-        alert("2");
     </script>
     
 </body>
