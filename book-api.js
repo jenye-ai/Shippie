@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express()
-const port = 3000
+const port = 8000
 
 let books = [{
     "isbn": "9781593275846",
@@ -41,7 +41,6 @@ let users = [{
 }];
 
 var currentUser = null;
-
 
 app.use(cors());
 
@@ -96,7 +95,7 @@ app.post('/login', (req, res) => {
             currentUser = userLogin
 
             //res.sendFile(__dirname + '/book-list.html');
-            res.redirect("http://localhost:3000/orders");
+            res.redirect("http://localhost:8000/orders");
             return;
         }
     }
@@ -114,7 +113,7 @@ app.get('/orders', (req, res) => {
             else {
                 res.sendFile(__dirname + '/book-list.html');
             }
-            
+
             return;
            
         }
@@ -191,6 +190,5 @@ app.post('/book/:isbn', (req, res) => {
     res.send('Book is edited');
 });
 // *****************
-
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
