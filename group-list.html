@@ -62,10 +62,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        const viewOrder = (id, admin) => {
+        const viewOrder = () => {
             const user =  ((window.location.href).toString()).replace('http://localhost:8000/groups/',''); 
-            window.alert(admin + "yeet" + user)
-            if (admin == user){
+            window.alert(admin_name + "yeet" + user)
+            if (admin_name == user){
                 window.location.href = "http://localhost:8000/groups/" + user + "/" + id + "/admin";
             }               
             
