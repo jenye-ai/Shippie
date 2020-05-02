@@ -44,7 +44,7 @@ let groups = [{
     "admin_name": "shi",
     "orders":[
         {
-            "username": "anton",
+            "username": "jennifer",
             "items": [{
                 "id": "1",
                 "url": "a.com",
@@ -128,7 +128,7 @@ app.get('/user', (req, res) => {
     res.json(users);
 });
 
-// USER FUNCTIONS (Login)
+// ********** USER LOGIN FUNCTIONS *************
 app.post('/login', (req, res) => {
     const userLogin = req.body.username
     const passLogin = req.body.password
@@ -148,6 +148,8 @@ app.post('/login', (req, res) => {
     res.send(`User Not Found; Username/Password Incorrect`);
 });
 
+// ********** CONNECTING USER LOGIN TO GROUPS FUNCTIONS *************
+//Directs user to their corresponding list of groups page
 app.get('/groups/:username', (req, res) => {
 
     const username = req.params.username;
@@ -170,8 +172,8 @@ app.get('/groups/:username', (req, res) => {
     
 });
 
-// ********** Group FUNCTIONS *************
-//returns group with id
+// ********** GROUP FUNCTIONS *************
+//returns information of group based on id (used for debugging)
 app.get('/group/:id', (req, res) => {
     // reading id from the URL
     const id = req.params.id;
@@ -189,7 +191,7 @@ app.get('/group/:id', (req, res) => {
 });
 
 
-
+// Adds a group to database
 app.get('/group/create/:username', (req, res) => {
 
     // output the book to the console for debugging
@@ -211,10 +213,7 @@ app.get('/group/create/:username', (req, res) => {
 
 
 });
-
-
-
-
+/*
 //adds a group
 app.post('/group', (req, res) => {
     const group = req.body;
@@ -225,7 +224,7 @@ app.post('/group', (req, res) => {
 
     res.send('Group is added to the database');
 });
-
+*/
 
 //returns list of all groups
 app.get('/group', (req, res) => {
@@ -251,6 +250,17 @@ app.delete('/group/:id', (req, res) => {
     res.send('Group is deleted');
 });
 
+// ********** CONNECTING GROUP TO ORDERS FUNCTIONS *************
+app.get('/groups/:username/:id/user', (req, res) => {
 
+    res.sendFile(__dirname + '/book-list.html');
+});
+
+
+/*app.get('/groups/:username/:id/admin', (req, res) => {
+
+
+});
+*/
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));

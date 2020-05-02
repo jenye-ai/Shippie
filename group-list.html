@@ -62,9 +62,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        const checkOrders = (id) => {
-        
-            //location.reload();
+        const viewOrder = (id, admin) => {
+            const user =  ((window.location.href).toString()).replace('http://localhost:8000/groups/',''); 
+            window.alert(admin + "yeet" + user)
+            if (admin == user){
+                window.location.href = "http://localhost:8000/groups/" + user + "/" + id + "/admin";
+            }               
+            
+            window.location.href = "http://localhost:8000/groups/" + user + "/" + id + "/user";
         }
 
         const addGroup = () => {
@@ -115,10 +120,7 @@
                                     <hr>
 
                                     <button type="button" class="btn btn-danger" onClick = "deleteGroup(${group.id})">Delete</button>
-                                    <button types="button" class="btn btn-primary" data-toggle="modal" 
-                                        data-target="#editBookModal" onClick="editGroup(${group.id})">
-                                        Edit
-                                    </button>
+                                    <button types="button" class="btn btn-primary" onClick="viewOrder(${group.id}, ${group.admin_name})">View</button>
                                 </div>
                             </div>
                         </div>
@@ -140,10 +142,7 @@
                                             <hr>
 
                                             <button type="button" class="btn btn-danger" onClick = "deleteGroup(${group.id})">Delete</button>
-                                            <button types="button" class="btn btn-primary" data-toggle="modal" 
-                                                data-target="#editBookModal" onClick="editGroup(${group.id})">
-                                                Edit
-                                            </button>
+                                            <button types="button" class="btn btn-primary" onClick="viewOrder(${group.id}, ${group.admin_name})">View</button>
                                         </div>
                                     </div>
                                 </div>
