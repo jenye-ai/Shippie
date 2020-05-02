@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <hr>
+        <h1>List of Groups</h1>
+        <div class="col-4">
+            <button type="button" class="btn btn-primary" onClick = "addGroup()">Add Group</button>
+        </div>
+        <hr>
+
+        <div>
+            <div class="row" id="groups">
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div id="editBookModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Group</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                        <form id="editForm" method="POST">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">ID</label>
+                                <input class="form-control" name="id" id="id">
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Admin</label>
+                                <input class="form-control" name="admin" id="admin">
+                            </div>
+                
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        const checkOrders = (id) => {
+        
+            //location.reload();
+        }
+
+        const addGroup = () => {
+        
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.open("POST", `http://localhost:8000/group`, false);
+            xhttp.send();
+
+            document.getElementById('admin_name').value = admin_name;
+
+            // setting up the action url for the book
+            //document.getElementById('editForm').action = `http://localhost:8000/book/${isbn}`;
+            
+        }
+
+        const deleteGroup = (id) => {
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.open("DELETE", `http://localhost:8000/group/${id}`, false);
+            xhttp.send();
+            
+
+            location.reload();
+        }
+
+        const loadGroups = () => {
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.open("GET", `http://localhost:8000/group`, false);
+            xhttp.send();
+            
+            const groups = JSON.parse(xhttp.responseText);
+
+            const user =  ((window.location.href).toString()).replace('http://localhost:8000/groups/','');
+
+            for (let group of groups) {
+                const x = null
+                if (group.admin_name == user){
+    
+                    const x = `
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Group ${group.id} (YOU ARE ADMIN)</h5>
+    
+                                    <div>Admin: ${group.admin_name}</div>
+    
+
+                                    <hr>
+
+                                    <button type="button" class="btn btn-danger" onClick = "deleteGroup(${group.id})">Delete</button>
+                                    <button types="button" class="btn btn-primary" data-toggle="modal" 
+                                        data-target="#editBookModal" onClick="editGroup(${group.id})">
+                                        Edit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                    document.getElementById('groups').innerHTML = document.getElementById('groups').innerHTML + x;
+                }
+                else {
+                    for (let i of group.orders){
+                        if (i.username == user){
+                            const x = `
+                                <div class="col-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Group ${group.id}</h5>
+            
+                                            <div>Admin: ${group.admin_name}</div>
+            
+
+                                            <hr>
+
+                                            <button type="button" class="btn btn-danger" onClick = "deleteGroup(${group.id})">Delete</button>
+                                            <button types="button" class="btn btn-primary" data-toggle="modal" 
+                                                data-target="#editBookModal" onClick="editGroup(${group.id})">
+                                                Edit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                `
+                            document.getElementById('groups').innerHTML = document.getElementById('groups').innerHTML + x;
+                        }
+                    }
+                }
+
+                
+            }
+        }
+
+        loadGroups();
+    </script>
+    
+</body>
+
+</html>
