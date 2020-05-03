@@ -78,20 +78,28 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script>
-        const deleteItem = (delete_id,username,groupid) => {
-            alert('1');
+        const deleteItem = (deletedata) => {
+            let arr = deletedata.split(',');
+            alert(arr[0]);
             const xhttp = new XMLHttpRequest();
-
-            xhttp.open("DELETE", `http://localhost:8000/groups/${username}/${groupid}/user/${delete_id}`, false);
+            xhttp.open("DELETE", `http://localhost:8000/groups/${arr[2]}/${arr[1]}/user/${arr[0]}`, false);
             xhttp.send();
 
             location.reload();
         }
+        // const deleteItem = (id,username,groupid) => {
+        //     const xhttp = new XMLHttpRequest();
+        //     xhttp.open("DELETE", `http://localhost:8000/groups/${username}/${groupid}/user/${id}`, false);
+        //     xhttp.send();
+
+        //     location.reload();
+        // }
 
         const loadItems = () => {
             //jen's get info from url code
+            // const displayusername =  ((window.location.href).toString());
             const displayusername = "anton";
-            const displaygroupid = 1;
+            const displaygroupid = 2;
             
             const xhttp = new XMLHttpRequest();
         
@@ -100,16 +108,17 @@
             const items = JSON.parse(xhttp.responseText);
 
             for (let item of items) {
-                const deletedata = [item.id, displayusername, displaygroupid];
+                // const deletedata = item.id.toString()+","+displayusername.toString()+","+displaygroupid.toString();
                 // alert(deletedata.toString());
+                // alert(type(item.id,displaygroupid,displayusername));
                 const x = `
                     <div id="product" class="product">
                         <div class="row">
                             <div class="col-10">
                                 <div class="url">Product: ${item.url}</div>
-                                    <div class="price">Price: ${item.price}</div>
-                                </div>
-                            <div class="col-2"><button id="remove-b" class="btn delete-item" onClick="deleteItem(${item.id},${displayusername},${displaygroupid})">X</button></div>
+                                <div class="price">Price: ${item.price}</div>
+                            </div>
+                            <div class="col-2"><button id="remove-b" class="btn delete-item" onClick="deleteItem('${item.id},${displaygroupid},${displayusername}')">X </button></div>
                         </div>
                     </div>
                 `
