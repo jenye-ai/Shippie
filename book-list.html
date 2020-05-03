@@ -16,7 +16,13 @@
 
     <div class="container">
         <hr>
-        <h2>jennifer's Cart</h2>
+        <!-- <div id="cart-header row">
+            <h2>'s Cart</h2>
+            <p class="signed-in">signed in as: </p>
+        </div> -->
+        <!-- <h2 id="cart-header">'s Cart<span class="signed-in">signed in as: </span></h2> -->
+        <h2>shi's Cart</h2>
+        <h6>signed in as: <span class="username">jennifer</span></h6>
         <hr>
 
         <div class="row">
@@ -65,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-5">
                 <div class="pickup-details">
                     <p class="purple-header">PICKUP FROM OWNER</p>
                     <p class="b1"><b>Pickup Location: </b><br>Shippie McShoppy Road, Unit 123<br><br>
@@ -161,7 +167,13 @@
                     // const deletedata = item.id.toString()+","+displayusername.toString()+","+displaygroupid.toString();
                     // alert(deletedata.toString());
                     // alert(type(item.id,displaygroupid,displayusername));
-                    
+
+                    // const y = `
+                    //     <h2>${displayusername}'s Cart</h2>
+                    //     <p class="signed-in">signed in as: <span class="username">${displayusername}</span></p>
+                    // `
+                    // document.getElementById('cart-header').innerHTML = document.getElementById('display_items').innerHTML + y;
+
                     const x = `
                         <div id="product" class="product">
                             <div class="row">
@@ -181,6 +193,14 @@
         loadItems();
     </script>
     <style>
+        
+        .signed-in{
+            margin-left: 48rem;
+            font-size: 20px;
+        }
+        .username{
+            color:  #F0BC40;
+        }
         .purple-header{
             color: #6D7993;
             font-size: 36px;
@@ -282,6 +302,7 @@
             border-radius: 12px;
             text-align: center;
             padding: 2rem;
+            margin-left: 1rem;
         }
         .purple-header{
             font-size: 18px;

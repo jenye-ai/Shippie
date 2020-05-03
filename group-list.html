@@ -18,6 +18,8 @@
         <!-- <img class="logo-big" src="filters.png" width=200> -->
         <br>
         <h1 class="big-heading">Your Groups</h1>
+        <h6>signed in as: <span class="username">jennifer</span></h6>
+        <br>
         <button type="button" class="btn create-group" onClick = "addGroup()">CREATE GROUP</button>
         <br><br>
         <div>
@@ -141,8 +143,6 @@
                         }
                     }
                 }
-
-                
             }
         }
 
@@ -150,6 +150,9 @@
     </script>
 
     <style>
+        .username{
+            color:  #F0BC40;
+        }
         .container{
             padding: 4rem 6rem 0rem 6rem;
             background-color: #6D7993;
