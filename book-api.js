@@ -309,25 +309,30 @@ app.delete('/groups/:username/:group_id/user/:item_id', (req, res) => {
     const delete_username = req.params.username;
     const delete_group_id = req.params.group_id;
     const delete_item_id = req.params.item_id;
-    console.log(req.params);
 
-    //reach in to items
+    //reach in groups
     for (let i = 0; i < groups.length; i++) {
         let group = groups[i];
-        if (group.group_id === delete_group_id) {
+        console.log("group");
+        if (group.group_id == delete_group_id) {
             for (let j = 0; j < group.orders.length; j++) {
                 let order = group.orders[j];
-                if (order.username === delete_username) {
-                    order.items = order.items.filter(k => {
-                        if (k.id !== delete_item_id) {
-                            return true;
+                console.log("order");
+                if (order.username == delete_username) {
+                    console.log(order);
+                    for (let k = 0; k < order.items.length; k++) {
+                        let item = order.items[k];
+                        console.log(item);
+                        if (item.id == delete_item_id) {
+                            order.items.splice(k, 1);
+                            console.log(order.items);
+                            res.redirect('back');
                         }
-                        return false;
-                    });
+                    }
                 }
             }    
         }
     }
-    res.send("got nothing here");
+    
 });
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
