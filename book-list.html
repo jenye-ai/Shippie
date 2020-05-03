@@ -97,34 +97,85 @@
 
         const loadItems = () => {
             //jen's get info from url code
+            // const displayusername =  ((window.location.href).toString());
             var text =  ((window.location.href).toString()).replace('http://localhost:8000/groups/','');
-            text =  text.split("/")
-            const displayusername = text[0]
-            const displaygroupid = text[1]
+            text= text.split("/");
+
+            var admin = false;
+            const displayusername = text[0].toString();
+            const displaygroupid = text[1].toString();
             
-            const xhttp = new XMLHttpRequest();
+            const xhttp1 = new XMLHttpRequest();
+
+            xhttp1.open("GET", `http://localhost:8000/group`, false);
+            xhttp1.send();
+
+            const groups = JSON.parse(xhttp1.responseText);
+            var order;
         
-            xhttp.open("GET", `http://localhost:8000/groups/${displayusername}/${displaygroupid}`, false);
-            xhttp.send();
-            const items = JSON.parse(xhttp.responseText);
-            console.log(items)
-            for (let item of items) {
-                // const deletedata = item.id.toString()+","+displayusername.toString()+","+displaygroupid.toString();
-                // alert(deletedata.toString());
-                // alert(type(item.id,displaygroupid,displayusername));
+
+            for (let group of groups){
                 
-                const x = `
-                    <div id="product" class="product">
-                        <div class="row">
-                            <div class="col-10">
-                                <div class="url">Product: ${item.url}</div>
-                                <div class="price">Price: ${item.price}</div>
+                if (group.group_id == displaygroupid){
+
+                    if (group.admin_name == displayusername){
+                        admin = true;
+                        order = group.orders;
+                    }
+
+                }
+
+            }
+        
+            if (admin){
+
+                for (let i of order) {
+                    // const deletedata = item.id.toString()+","+displayusername.toString()+","+displaygroupid.toString();
+                    // alert(deletedata.toString());
+                    // alert(type(item.id,displaygroupid,displayusername));
+                    for (let item of i.items) {
+                        const x = `
+                            <div id="product" class="product">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <div class="url">Product: ${item.url} </div>
+                                        <div class="price">Price: ${item.price}</div>
+                                        <div class="User">User: ${i.username}</div>
+                                    </div>
+                                    <div class="col-2"><button id="remove-b" class="btn delete-item" onClick="deleteItem('${item.id},${displaygroupid},${displayusername}')">X </button></div>
+                                </div>
                             </div>
-                            <div class="col-2"><button id="remove-b" class="btn delete-item" onClick="deleteItem('${item.id},${displaygroupid},${displayusername}')">X </button></div>
+                        `
+                        document.getElementById('display_items').innerHTML = document.getElementById('display_items').innerHTML + x;
+                    }
+                }
+
+            }else{
+
+                const xhttp = new XMLHttpRequest();
+        
+                xhttp.open("GET", `http://localhost:8000/groups/${displayusername}/${displaygroupid}`, false);
+                xhttp.send();
+                const items = JSON.parse(xhttp.responseText);
+
+                for (let item of items) {
+                    // const deletedata = item.id.toString()+","+displayusername.toString()+","+displaygroupid.toString();
+                    // alert(deletedata.toString());
+                    // alert(type(item.id,displaygroupid,displayusername));
+                    
+                    const x = `
+                        <div id="product" class="product">
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="url">Product: ${item.url}</div>
+                                    <div class="price">Price: ${item.price}</div>
+                                </div>
+                                <div class="col-2"><button id="remove-b" class="btn delete-item" onClick="deleteItem('${item.id},${displaygroupid},${displayusername}')">X </button></div>
+                            </div>
                         </div>
-                    </div>
-                `
-                document.getElementById('display_items').innerHTML = document.getElementById('display_items').innerHTML + x;
+                    `
+                    document.getElementById('display_items').innerHTML = document.getElementById('display_items').innerHTML + x;
+                }
             }
         }
 

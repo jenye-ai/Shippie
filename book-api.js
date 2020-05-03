@@ -25,7 +25,7 @@ let groups = [{
             }],
         },
         {
-            "username": "anton",
+            "username": "shi",
             "items": [{
                 "id": "1",
                 "url": "a.com",
@@ -91,6 +91,8 @@ app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(express.static('11pm Shippie-master'));
 
 // HOME PAGE
 app.get('/', (req, res) => {
@@ -187,7 +189,7 @@ app.get('/group/:group_id', (req, res) => {
     }
 
     // sending 404 when not found something is a good practice
-    res.status(404).send('Book not found');
+    res.status(404).send('Group not found');
 });
 
 
@@ -245,11 +247,6 @@ app.get('/groups/:username/:group_id/user', (req, res) => {
 });
 
 
-app.get('/groups/:username/:group_id/admin', (req, res) => {
-
-    res.sendFile(__dirname + '/book-list.html');
-});
-
 let push_id = 10;
 let push_group_id = "";
 
@@ -270,6 +267,8 @@ app.get('/groups/:displayusername/:displaygroupid', (req, res) => {
         }
     }
 });
+
+
 
 //add
 app.post('/groups/:username/:group_id/user/add_item', (req, res) => {
