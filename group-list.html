@@ -13,20 +13,16 @@
 
 <body>
     <div class="container">
+        <br>
+        <h1>Your Groups</h1>
         <hr>
-        <h1>List of Groups</h1>
-
-        <button type="button" class="btn btn-primary" onClick = "addGroup()">Create New</button>
-
-        <hr>
-
+        <button type="button" class="btn create-group" onClick = "addGroup()">Create Group</button>
+        <br><br>
         <div>
             <div class="row" id="groups">
             </div>
         </div>
-    </div>
-
-    
+    </div>    
 
     <!-- <div id="editBookModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -109,21 +105,18 @@
                 if (group.admin_name == user){
     
                     const x = `
-                        <div class="col-4">
-                            <div class="card">
+                        <div class="col-6">
+                            <div class="card group-card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Group ${group.group_id} (YOU ARE ADMIN)</h5>
-    
-                                    <div>Admin: ${group.admin_name}</div>
-    
+                                    <h5 class="card-title">${group.admin_name}'s Order | Group ${group.group_id}</h5>
 
-                                    <hr>
 
-                                    <button type="button" class="btn btn-danger" onClick = "deleteGroup(${group.group_id})">Delete</button>
-                                    <button types="button" class="btn btn-primary" href = # onClick="viewOrder( ${group.group_id})">View</button>
+                                    <button type="button" class="btn cancel" onClick = "deleteGroup(${group.group_id})">Cancel Order</button>
+                                    <button type="button" class="btn view-orders" onClick="viewOrder(${group.group_id})">View Orders</button>
                                 </div>
                             </div>
                         </div>
+                        
                     `
                     document.getElementById('groups').innerHTML = document.getElementById('groups').innerHTML + x;
                 }
@@ -131,21 +124,16 @@
                     for (let i of group.orders){
                         if (i.username == user){
                             const x = `
-                                <div class="col-4">
-                                    <div class="card">
+                                <div class="col-6">
+                                    <div class="card group-card">
                                         <div class="card-body">
-                                            <h5 class="card-title">Group ${group.group_id}</h5>
-            
-                                            <div>Admin: ${group.admin_name}</div>
-            
-
-                                            <hr>
-
-                                           
-                                            <button types="button" class="btn btn-primary" href = # onClick= "viewOrder(${group.group_id})" >View</button>
+                                            <h5 class="card-title">${group.admin_name}'s Order | Group ${group.group_id}</h5>
+                                            
+                                            <button type="button" class="btn view-orders" onClick="viewOrder(${group.group_id})">Setup Your Order</button>
                                         </div>
                                     </div>
                                 </div>
+                               
                                 `
                             document.getElementById('groups').innerHTML = document.getElementById('groups').innerHTML + x;
                         }
@@ -158,6 +146,44 @@
 
         loadGroups();
     </script>
+
+    <style>
+        .group-card{
+            margin-bottom: 5px;
+            border-radius: 10px;
+            background: #f5f5f5;
+            border: none;
+        }
+
+        .cancel{
+            border-radius: 25px;
+            background-color: grey;
+            color: white;
+            padding: 4px 18px 4px 18px;
+        }
+
+        .view-orders{
+            border-radius: 25px;
+            background-color: #F0BC40;
+            color: white;
+            font-weight: 600;
+            padding: 4px 18px 4px 18px;
+        }
+
+        .card-title{
+            color: #5e5e5e;
+        }
+
+        .id-text{
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .create-group{
+            background-color: #6D7993;
+            color: white;
+        }
+    </style>
     
 </body>
 
