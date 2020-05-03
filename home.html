@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>GroupOrder</title>
+    <title>Shippie | Welcome</title>
     <link rel="shortcut icon" href="">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -13,52 +13,121 @@
 
 <body>
     <div class="container">
-        <hr>
-        <h1>Welcome To GroupOrder!</h1>
-        <hr>
+        <br>
+        <img class="logo-big" src="./logo-purple.png" width=200>
         <br><br>
 
-        <div class="row">
+        <div class="row middle">
             <div class="col-6">
-                <h3>Create An Account:</h3>
-                <form action="http://localhost:8000/user" method="POST">
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Username</label>
-                        <input class="form-control" name="username">
-                    </div>
+                <div class="small-text">Not a user yet? Join the Shippie community today!</div>
+                <div class="home-card create-acc-card">
+                    <h3 class="big-header">Create an Account</h3>
+                    <form action="http://localhost:8000/user" method="POST">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="purple-h">Username:</label>
+                            <input class="form-control" name="username">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input class="form-control" name="password">
-                    </div>
-
-                    <!-- <div class="form-group">
-                    <label for="exampleInputPassword1">Power</label>
-                    <input class="form-control" name="power">
-                </div> -->
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="purple-h">Password:</label>
+                            <input class="form-control" name="password">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn yellow-btn">CREATE ACCOUNT</button>
+                    </form>
+                </div>
             </div>
 
             <div class="col-6">
-                <h3>Login:</h3>
-                <form action="http://localhost:8000/login" method="POST">
-                    <div class="form-group">
-                        <label for="userlogin">Username</label>
-                        <input class="form-control" name="username">
-                    </div>
+                <div class="small-text2">Already a user?</div>
+                <div class="home-card login-card">
+                    <h3 class="big-header">Login</h3>
+                    <form action="http://localhost:8000/login" method="POST">
+                        <div class="form-group">
+                            <label for="userlogin" class="purple-h">Username:</label>
+                            <input class="form-control" name="username">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="passlogin">Password</label>
-                        <input class="form-control" name="password">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                        <div class="form-group">
+                            <label for="passlogin" class="purple-h">Password:</label>
+                            <input class="form-control" name="password">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn yellow-btn">LOGIN</button>
+                    </form>
+                </div>
+                
             </div>
         </div>
     </div>
+
+    <style>
+        .container{
+            background-color: #6D7993;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .logo-big{
+            margin-left: 4rem;
+        }
+
+        .small-text{
+            font-size: 12px;
+            font-style: italic;
+            color: #e5e5e5;
+            margin-bottom: 1rem;
+            margin-left: 7rem;
+        }
+        .small-text2{
+            font-size: 12px;
+            font-style: italic;
+            color: #e5e5e5;
+            margin-bottom: 1rem;
+            margin-left: 1rem;
+        }
+        
+        .home-card{
+            padding: 3rem;
+            border-radius: 18px;
+            background-color: #EBEBEB;
+        }
+
+        .create-acc-card{
+            margin-left: 6rem;
+        }
+
+        .login-card{
+            margin-right: 6rem;
+        }
+
+        .big-header{
+            padding-bottom: 2rem;
+            color: #5e5e5e;
+        }
+
+        .purple-h{
+            color: #6D7993;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .yellow-btn{
+            border-radius: 25px;
+            background-color: #F0BC40;
+            color: white;
+            font-weight: 600;
+            padding: 4px 18px 4px 18px;
+            width: 220px;
+            margin-left: 4rem;
+        }
+
+        .form-control{
+            border-radius: 18px;
+        }
+
+
+    </style>
 </body>
 
 </html>
