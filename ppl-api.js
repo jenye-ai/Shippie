@@ -160,26 +160,31 @@ app.delete('/groups/:username/:group_id/user/:item_id', (req, res) => {
     const delete_username = req.params.username;
     const delete_group_id = req.params.group_id;
     const delete_item_id = req.params.item_id;
-    console.log(req.params);
+    // console.log(req.params);
 
     //reach in to items
     for (let i = 0; i < groups.length; i++) {
         let group = groups[i];
-        if (group.group_id === delete_group_id) {
+        // console.log("group");
+        if (group.group_id == delete_group_id) {
             for (let j = 0; j < group.orders.length; j++) {
                 let order = group.orders[j];
-                if (order.username === delete_username) {
+                // console.log("order");
+                if (order.username == delete_username) {
+                    // console.log(order);
                     order.items = order.items.filter(k => {
+                        // console.log(k);
                         if (k.id !== delete_item_id) {
                             return true;
                         }
                         return false;
                     });
+                    // console.log(order);
                 }
             }    
         }
     }
-    res.send("got nothing here");
+    
 });
 
 //redirect
