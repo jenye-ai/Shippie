@@ -38,14 +38,14 @@
                 <div class="contribution-box">
                     <p class="contributor-name">Contributor: Shivani Chidella</p>
 <!-- edit here -->
-                    <form action="http://localhost:8000/add_item" method="POST"> 
+                    <form id="postform" method="POST"> 
                         <div class="row">
                             <div class="form-group">
                                 <input for="item-URL" class="form-control url-input" type="text" name="url"
                                     placeholder="Your Product URL...">
                             </div>
                             <div class="form-group">
-                                <input for="item-price" class="form-control price-input" type="text" name="url"
+                                <input for="item-price" class="form-control price-input" type="text" name="price"
                                     placeholder="$0.00">
                             </div>
                             <button id="add-b" class="btn btn-primary add-item" type="submit">ADD ITEM</button>
@@ -80,7 +80,6 @@
     <script>
         const deleteItem = (deletedata) => {
             let arr = deletedata.split(',');
-            alert(arr[0]);
             const xhttp = new XMLHttpRequest();
             xhttp.open("DELETE", `http://localhost:8000/groups/${arr[2]}/${arr[1]}/user/${arr[0]}`, false);
             xhttp.send();
@@ -97,20 +96,27 @@
 
         const loadItems = () => {
             //jen's get info from url code
-            // const displayusername =  ((window.location.href).toString());
-            const displayusername = "anton";
-            const displaygroupid = 2;
+            // var text =  ((window.location.href).toString()).replace('http://localhost:8000/groups/','');
+            // text =  text.split("/");
+            text = ["anton",2];
+            const displayusername = text[0];
+            const displaygroupid = text[1];
             
             const xhttp = new XMLHttpRequest();
-        
-            xhttp.open("GET", `http://localhost:8000/groups/${displayusername}/${displaygroupid}/user`, false);
+            xhttp.open("GET", `http://localhost:8000/groups/${displayusername}/${displaygroupid}`, false);
             xhttp.send();
             const items = JSON.parse(xhttp.responseText);
 
+            // setup form action
+            let actionurl = `http://localhost:8000/groups/${displayusername}/${displaygroupid}/user/add_item`;
+            document.getElementById("postform").setAttribute("action", actionurl);
+
+            // console.log(items);
             for (let item of items) {
                 // const deletedata = item.id.toString()+","+displayusername.toString()+","+displaygroupid.toString();
                 // alert(deletedata.toString());
                 // alert(type(item.id,displaygroupid,displayusername));
+                
                 const x = `
                     <div id="product" class="product">
                         <div class="row">
