@@ -1,6 +1,7 @@
 # Shippie
 
 TOHacks 2020 Submission
+
 Authors: Titomi Adebajo, Shivani Chidella, Anton Liu, Jennifer Ye
 
 Shippie is an online web platform that allows users to create group orders together. Use Shippie to save on shipping fees with friends, family, or maybe strangers - or manage multiple orders for a suprise gift on the same website!
