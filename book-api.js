@@ -92,6 +92,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(express.static('public')); //image serving
+
 app.use(express.static('11pm Shippie-master'));
 
 // HOME PAGE
@@ -270,6 +272,7 @@ app.get('/groups/:displayusername/:displaygroupid', (req, res) => {
 
 
 
+
 //add
 app.post('/groups/:username/:group_id/user/add_item', (req, res) => {
     const push_url = req.body.url;
@@ -293,7 +296,7 @@ app.post('/groups/:username/:group_id/user/add_item', (req, res) => {
                 let order = group.orders[j];
                 if (order.username === push_username) {
                     order.items.push(push_item);
-                    console.log(order);
+                    res.redirect('back');
                 }
             }    
         }

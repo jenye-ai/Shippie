@@ -38,14 +38,14 @@
                 <div class="contribution-box">
                     <p class="contributor-name">Contributor: Shivani Chidella</p>
 <!-- edit here -->
-                    <form action="http://localhost:8000/add_item" method="POST"> 
+                    <form id="postform" method="POST"> 
                         <div class="row">
                             <div class="form-group">
                                 <input for="item-URL" class="form-control url-input" type="text" name="url"
                                     placeholder="Your Product URL...">
                             </div>
                             <div class="form-group">
-                                <input for="item-price" class="form-control price-input" type="text" name="url"
+                                <input for="item-price" class="form-control price-input" type="text" name="price"
                                     placeholder="$0.00">
                             </div>
                             <button id="add-b" class="btn btn-primary add-item" type="submit">ADD ITEM</button>
@@ -66,12 +66,12 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-4">
+            <div class="col-4">
                 <div class="pickup-details">
                     <p class="purple-header">PICKUP FROM OWNER</p>
                     <p class="b1"> detailssss</p>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 
@@ -87,13 +87,7 @@
 
             location.reload();
         }
-        // const deleteItem = (id,username,groupid) => {
-        //     const xhttp = new XMLHttpRequest();
-        //     xhttp.open("DELETE", `http://localhost:8000/groups/${username}/${groupid}/user/${id}`, false);
-        //     xhttp.send();
 
-        //     location.reload();
-        // }
 
         const loadItems = () => {
             //jen's get info from url code
@@ -112,6 +106,10 @@
 
             const groups = JSON.parse(xhttp1.responseText);
             var order;
+
+            // setup form action
+            let actionurl = `http://localhost:8000/groups/${displayusername}/${displaygroupid}/user/add_item`;
+            document.getElementById("postform").setAttribute("action", actionurl);
         
 
             for (let group of groups){
