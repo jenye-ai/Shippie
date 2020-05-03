@@ -16,28 +16,27 @@
 
     <div class="container">
         <hr>
-        <h1>Owner's Cart</h1>
+        <h2>jennifer's Cart</h2>
         <hr>
 
         <div class="row">
             <div class="col-6">
-                <h3>Sephora, Canada</h3>
+                <p class="purple-header">sephora.ca &nbsp;| &nbsp; $70/$100</p>
 
                 <div class="progress">
                     <div class="progress-bar bg-warning zero-width" role="progressbar" id="progress-bar-length"
                         aria-valuenow=10 aria-valuemin="0" aria-valuemax="100" style="width:70%"></div>
                 </div>
-                <div class="row money_progress">
+                <!-- <div class="row money_progress">
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <p>$</p>
                     <p id="contributions">70</p>
                     <p>/$</p>
                     <p id="totalAmount">100</p>
-                </div>
+                </div> -->
 
                 <div class="contribution-box">
-                    <p class="contributor-name">Contributor: Shivani Chidella</p>
-<!-- edit here -->
+                    <br><br><!-- edit here -->
                     <form id="postform" method="POST"> 
                         <div class="row">
                             <div class="form-group">
@@ -48,7 +47,7 @@
                                 <input for="item-price" class="form-control price-input" type="text" name="price"
                                     placeholder="$0.00">
                             </div>
-                            <button id="add-b" class="btn btn-primary add-item" type="submit">ADD ITEM</button>
+                            <button id="add-b" class="btn add-item" type="submit">ADD ITEM</button>
                         </div>
                     </form>
 
@@ -69,7 +68,10 @@
             <div class="col-4">
                 <div class="pickup-details">
                     <p class="purple-header">PICKUP FROM OWNER</p>
-                    <p class="b1"> detailssss</p>
+                    <p class="b1"><b>Pickup Location: </b><br>Shippie McShoppy Road, Unit 123<br><br>
+                        <b>Pickup Date: </b><br>12/29/2020<br><br><b>Contact: </b><br>123-456-7890
+
+                    </p>
                 </div>
             </div>
         </div>
@@ -80,7 +82,7 @@
     <script>
         const deleteItem = (deletedata) => {
             let arr = deletedata.split(',');
-            alert(arr[0]);
+            // alert(arr[0]);
             const xhttp = new XMLHttpRequest();
             xhttp.open("DELETE", `http://localhost:8000/groups/${arr[2]}/${arr[1]}/user/${arr[0]}`, false);
             xhttp.send();
@@ -136,9 +138,8 @@
                             <div id="product" class="product">
                                 <div class="row">
                                     <div class="col-10">
-                                        <div class="url">Product: ${item.url} </div>
-                                        <div class="price">Price: ${item.price}</div>
-                                        <div class="User">User: ${i.username}</div>
+                                        <div class="url"><b>${item.url} </b>&nbsp;<span class="price">$${item.price}</span></div>
+                                        <div class="user"><b>Ordered by:</b> ${i.username}</div>
                                     </div>
                                     <div class="col-2"><button id="remove-b" class="btn delete-item" onClick="deleteItem('${item.id},${displaygroupid},${displayusername}')">X </button></div>
                                 </div>
@@ -165,8 +166,8 @@
                         <div id="product" class="product">
                             <div class="row">
                                 <div class="col-10">
-                                    <div class="url">Product: ${item.url}</div>
-                                    <div class="price">Price: ${item.price}</div>
+                                    <div class="url"><b>${item.url}</b></div>
+                                    <div class="price2">$${item.price}</div>
                                 </div>
                                 <div class="col-2"><button id="remove-b" class="btn delete-item" onClick="deleteItem('${item.id},${displaygroupid},${displayusername}')">X </button></div>
                             </div>
@@ -180,6 +181,11 @@
         loadItems();
     </script>
     <style>
+        .purple-header{
+            color: #6D7993;
+            font-size: 36px;
+        }
+        
         .progress {
             height: 12px;
             width: 550px;
@@ -217,14 +223,16 @@
         }
         .add-item{
             font-size: 14px;
-            font-style: bold;
+            font-weight: 600;
             height: 2.4rem;
             margin-left: 0.5rem;
+            background-color: #F0BC40;
+            color: #f5f5f5;
         }
 
         .product{
-            border: 1px solid lightgrey;
-            background-color: lightgrey;
+            /* border: 1px solid lightgrey; */
+            background-color: #EBEBEB;
             width: 435px;
             height: 75px;
             border-radius: 8px;
@@ -238,6 +246,14 @@
         }
         .price{
             color: #5e5e5e;
+            font-style: italic;
+        }
+        .price2{
+            color: #5e5e5e;
+            margin-left: 1.5rem;
+        }
+        .user{
+            color: #5e5e5e;
             margin-left: 1.5rem;
         }
         .delete-item{
@@ -250,7 +266,7 @@
             border-radius: 50%;
         }
         .delete-item:hover{
-            background-color: grey;
+            background-color: lightgrey;
         }
 
         .contributor-total{
@@ -261,7 +277,7 @@
 
         .pickup-details{
             background-color: #f5f5f5;
-            height: 370px;
+            height: 290px;
             width: 100%;
             border-radius: 12px;
             text-align: center;

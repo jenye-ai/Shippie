@@ -13,10 +13,12 @@
 
 <body>
     <div class="container">
+        <!-- <br>
+        <img class="logo-big" src="logo-purple.png" width=150> -->
+        <!-- <img class="logo-big" src="filters.png" width=200> -->
         <br>
-        <h1>Your Groups</h1>
-        <hr>
-        <button type="button" class="btn create-group" onClick = "addGroup()">Create Group</button>
+        <h1 class="big-heading">Your Groups</h1>
+        <button type="button" class="btn create-group" onClick = "addGroup()">CREATE GROUP</button>
         <br><br>
         <div>
             <div class="row" id="groups">
@@ -148,10 +150,26 @@
     </script>
 
     <style>
+        .container{
+            padding: 4rem 6rem 0rem 6rem;
+            background-color: #6D7993;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .big-heading{
+            padding-bottom: 1rem;
+            color: #f5f5f5;
+            font-size: 35px;
+        }
+        
+        .logo-big{
+            margin-left: 4rem;
+        }
         .group-card{
             margin-bottom: 5px;
             border-radius: 10px;
-            background: #f5f5f5;
+            background: #EBEBEB;
             border: none;
         }
 
@@ -180,8 +198,9 @@
         }
 
         .create-group{
-            background-color: #6D7993;
-            color: white;
+            background-color: #5e5e5e;
+            color: #f5f5f5;
+            font-weight: 600;
         }
     </style>
     
