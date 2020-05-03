@@ -254,16 +254,16 @@ let push_id = 10;
 let push_group_id = "";
 
 //return list of items
-app.get('/groups/:displayusername/:displaygroupid/user', (req, res) => {
-    const display_username = req.params.displayusername.toString();
-    const display_group_id = parseInt(req.params.displaygroupid);
+app.get('/groups/:displayusername/:displaygroupid', (req, res) => {
+    const display_username = req.params.displayusername;
+    const display_group_id = req.params.displaygroupid;
 
     for (let i = 0; i < groups.length; i++) {
         let group = groups[i];
-        if (group.group_id === display_group_id) {
+        if (group.group_id == display_group_id) {
             for (let j = 0; j < group.orders.length; j++) {
                 let order = group.orders[j];
-                if (order.username === display_username) {
+                if (order.username == display_username) {
                     res.json(order.items);
                 }
             }    

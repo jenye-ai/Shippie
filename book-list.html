@@ -98,19 +98,21 @@
         const loadItems = () => {
             //jen's get info from url code
             // const displayusername =  ((window.location.href).toString());
+            
             const displayusername = "anton";
             const displaygroupid = 2;
             
             const xhttp = new XMLHttpRequest();
         
-            xhttp.open("GET", `http://localhost:8000/groups/${displayusername}/${displaygroupid}/user`, false);
+            xhttp.open("GET", `http://localhost:8000/groups/${displayusername}/${displaygroupid}`, false);
             xhttp.send();
             const items = JSON.parse(xhttp.responseText);
-
+            console.log(items)
             for (let item of items) {
                 // const deletedata = item.id.toString()+","+displayusername.toString()+","+displaygroupid.toString();
                 // alert(deletedata.toString());
                 // alert(type(item.id,displaygroupid,displayusername));
+                
                 const x = `
                     <div id="product" class="product">
                         <div class="row">
