@@ -3,65 +3,185 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express()
-const port = 3000
+const port = 8000
 
-let books = [{
-    "isbn": "9781593275846",
-    "title": "Eloquent JavaScript, Second Edition",
-    "author": "Marijn Haverbeke",
-    "publish_date": "2014-12-14",
-    "publisher": "No Starch Press",
-    "numOfPages": 472,
+let groupId = 3
+
+let groups = [{
+    "group_id": "1",
+    "admin_name": "jennifer",
+    "orders":[
+        {
+            "username": "anton",
+            "items": [{
+                "id": "1",
+                "url": "a.com",
+                "price": "13",
+            },
+            {
+                "id": "2",
+                "url": "b.com",
+                "price": "130",
+            }],
+        },
+        {
+            "username": "anton",
+            "items": [{
+                "id": "1",
+                "url": "a.com",
+                "price": "13",
+            },
+            {
+                "id": "2",
+                "url": "b.com",
+                "price": "130",
+            }],
+        }],
+
 },
 {
-    "isbn": "9781449331818",
-    "title": "Learning JavaScript Design Patterns",
-    "author": "Addy Osmani",
-    "publish_date": "2012-07-01",
-    "publisher": "O'Reilly Media",
-    "numOfPages": 254,
-},
-{
-    "isbn": "9781449365035",
-    "title": "Speaking JavaScript",
-    "author": "Axel Rauschmayer",
-    "publish_date": "2014-02-01",
-    "publisher": "O'Reilly Media",
-    "numOfPages": 460,
+    "group_id": "2",
+    "admin_name": "shi",
+    "orders":[
+        {
+            "username": "jennifer",
+            "items": [{
+                "id": "1",
+                "url": "a.com",
+                "price": "13",
+            },
+            {
+                "id": "2",
+                "url": "b.com",
+                "price": "130",
+            }],
+        },
+        {
+            "username": "anton",
+            "items": [{
+                "id": "1",
+                "url": "a.com",
+                "price": "13",
+            },
+            {
+                "id": "2",
+                "url": "b.com",
+                "price": "130",
+            }],
+        }],
+
+}
+
+];
+
+
+let users = [{
+    "username": "jennifer",
+    "password": "1234",
+
+}, {
+    "username": "shi",
+    "password": "5678",
+
 }];
+
+var currentUser = null;
 
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
+// HOME PAGE
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/home.html');
 });
 
-app.post('/book', (req, res) => {
-    const book = req.body;
-
-    // output the book to the console for debugging
-    console.log(book);
-    books.push(book);
-
-    res.send('Book is added to the database');
-});
-
-app.get('/book', (req, res) => {
-    res.json(books);
-});
-
-app.get('/book/:isbn', (req, res) => {
+// USER FUNCTIONS (REGISTRATION)
+app.get('/user/:username', (req, res) => {
     // reading isbn from the URL
-    const isbn = req.params.isbn;
+    const username = req.params.username;
+
+    // searching users for the username
+    for (let username of users) {
+        if (users.username === username) {
+            res.json(username);
+            return;
+        }
+    }
+
+    // sending 404 when not found something is a good practice
+    res.status(404).send('User not found');
+});
+
+app.post('/user', (req, res) => {
+    const user = req.body;
+
+    // output the user to the console for debugging
+    console.log(user);
+    users.push(user);
+
+    res.send('User is added to the database');
+});
+
+app.get('/user', (req, res) => {
+    res.json(users);
+});
+
+// ********** USER LOGIN FUNCTIONS *************
+app.post('/login', (req, res) => {
+    const userLogin = req.body.username
+    const passLogin = req.body.password
+
+    for (let i of users) {
+        if (i.username === userLogin) {
+            
+            //if users.password === passLogin:
+            currentUser = userLogin
+
+            //res.sendFile(__dirname + '/book-list.html');
+            res.redirect("http://localhost:8000/groups/"+ userLogin);
+            return;
+        }
+    }
+
+    res.send(`User Not Found; Username/Password Incorrect`);
+});
+
+// ********** CONNECTING USER LOGIN TO GROUPS FUNCTIONS *************
+//Directs user to their corresponding list of groups page
+app.get('/groups/:username', (req, res) => {
+
+    const username = req.params.username;
+    
+    for (let i of users) {
+        if (i.username === currentUser) {
+            if (i.power === "admin"){
+                res.sendFile(__dirname + '/group-list.html');
+
+            }
+            else {
+                res.sendFile(__dirname + '/group-list.html');
+            }
+
+            return;
+           
+        }
+    }
+    
+    
+});
+
+// ********** GROUP FUNCTIONS *************
+//returns information of group based on id (used for debugging)
+app.get('/group/:group_id', (req, res) => {
+    // reading id from the URL
+    const id = req.params.group_id;
 
     // searching books for the isbn
-    for (let book of books) {
-        if (book.isbn === isbn) {
-            res.json(book);
+    for (let group of groups) {
+        if (group.group_id == id) {
+            res.json(group);
             return;
         }
     }
@@ -70,39 +190,144 @@ app.get('/book/:isbn', (req, res) => {
     res.status(404).send('Book not found');
 });
 
-app.delete('/book/:isbn', (req, res) => {
-    // reading isbn from the URL
-    const isbn = req.params.isbn;
 
-    // remove item from the books array
-    books = books.filter(i => {
-        if (i.isbn !== isbn) {
+// Adds a group to database
+app.get('/group/create/:username', (req, res) => {
+
+    // output the book to the console for debugging
+    const username = req.params.username;
+    group = {}
+
+    group["group_id"] = groupId ;
+    groupId = groupId +1;
+    group["admin_name"] = username;
+
+    group["orders"] = [];
+    
+    console.log(group);
+    groups.push(group);
+
+    //res.send('Group is added to the database');
+
+    res.redirect("http://localhost:8000/groups/"+ username);
+
+
+});
+
+//returns list of all groups
+app.get('/group', (req, res) => {
+    res.json(groups);
+});
+
+// Deletes a group
+app.delete('/group/:group_id', (req, res) => {
+    // reading isbn from the URL
+    const id = req.params.group_id;
+
+    // remove item from the groups array
+    groups = groups.filter(i => {
+        if (i.group_id != id) {
             return true;
         }
 
         return false;
     });
 
+
     // sending 404 when not found something is a good practice
-    res.send('Book is deleted');
+    res.send('Group is deleted');
 });
 
-app.post('/book/:isbn', (req, res) => {
-    // reading isbn from the URL
-    const isbn = req.params.isbn;
-    const newBook = req.body;
+// ********** CONNECTING GROUP TO ORDERS FUNCTIONS *************
+app.get('/groups/:username/:group_id/user', (req, res) => {
 
-    // remove item from the books array
-    for (let i = 0; i < books.length; i++) {
-        let book = books[i]
+    res.sendFile(__dirname + '/book-list.html');
+});
 
-        if (book.isbn === isbn) {
-            books[i] = newBook;
+
+app.get('/groups/:username/:group_id/admin', (req, res) => {
+
+    res.sendFile(__dirname + '/book-list.html');
+});
+
+let push_id = 10;
+let push_group_id = "";
+
+//return list of items
+app.get('/groups/:displayusername/:displaygroupid/user', (req, res) => {
+    const display_username = req.params.displayusername.toString();
+    const display_group_id = parseInt(req.params.displaygroupid);
+
+    for (let i = 0; i < groups.length; i++) {
+        let group = groups[i];
+        if (group.group_id === display_group_id) {
+            for (let j = 0; j < group.orders.length; j++) {
+                let order = group.orders[j];
+                if (order.username === display_username) {
+                    res.json(order.items);
+                }
+            }    
+        }
+    }
+});
+
+//add
+app.post('/groups/:username/:group_id/user/add_item', (req, res) => {
+    const push_url = req.body.url;
+    const push_price = req.body.price;
+
+    const push_username = req.params.username;
+    const push_group_id = req.params.group_id;
+
+    const push_item = {
+        "id": push_id,
+        "url": push_url,
+        "price": push_price,
+    }
+
+    push_id ++;
+
+    for (let i = 0; i < groups.length; i++) {
+        let group = groups[i];
+        if (group.group_id === push_group_id) {
+            for (let j = 0; j < group.orders.length; j++) {
+                let order = group.orders[j];
+                if (order.username === push_username) {
+                    order.items.push(push_item);
+                    console.log(order);
+                }
+            }    
         }
     }
 
-    // sending 404 when not found something is a good practice
-    res.send('Book is edited');
-});
+    // res.send('Item is added');
+})
 
+//delete
+app.delete('/groups/:username/:group_id/user/:item_id', (req, res) => {
+    // reading id from URL
+    const delete_username = req.params.username;
+    const delete_group_id = req.params.group_id;
+    const delete_item_id = req.params.item_id;
+    console.log(req.params);
+
+    //reach in to items
+    for (let i = 0; i < groups.length; i++) {
+        let group = groups[i];
+        if (group.group_id === delete_group_id) {
+            for (let j = 0; j < group.orders.length; j++) {
+                let order = group.orders[j];
+                if (order.username === delete_username) {
+                    order.items = order.items.filter(k => {
+                        if (k.id !== delete_item_id) {
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+            }    
+        }
+    }
+    res.send("got nothing here");
+});
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));

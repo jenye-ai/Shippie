@@ -1,0 +1,95 @@
+.progress {
+    height: 12px;
+    width: 550px;
+    margin: 20px 0px 20px 0px;
+}
+
+.contribution-box{
+    width: 550px;
+    height: fit-content;
+    background-color: #6D7993;
+    border-radius: 15px;
+    overflow-x: hidden;
+    margin-bottom: 2rem; 
+}
+
+.contributor-name{
+    margin-left: 3rem;
+    padding-top: 2rem;
+    font-size: 22px;
+    color: white;
+    font-style: bold;
+}
+
+.add-product{
+    margin-left: 3rem;
+    margin-bottom: 0.5rem;
+}
+.url-input{
+    width: 250px;
+    margin-left: 4rem;
+    margin-right: 0.5rem;
+}
+.price-input{
+    width: 80px;
+}
+.add-item{
+    font-size: 14px;
+    font-style: bold;
+    height: 2.4rem;
+    margin-left: 0.5rem;
+}
+
+.product{
+    border: 1px solid lightgrey;
+    background-color: lightgrey;
+    width: 435px;
+    height: 75px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    margin-left: 2rem
+}
+.url{
+    color: #5e5e5e;
+    margin-left: 1.5rem;
+    line-height: 40px;
+}
+.price{
+    color: #5e5e5e;
+    margin-left: 1.5rem;
+}
+.delete-item{
+    background-color: white;
+    color: #5e5e5e;
+    font-size: 16px;
+    font-style: bold;
+    width: 40px;
+    margin-top: 1rem;
+    border-radius: 50%;
+}
+.delete-item:hover{
+    background-color: grey;
+}
+
+.contributor-total{
+    color: white;
+    margin-left: 3rem;
+    position: absolute;    
+}
+
+.pickup-details{
+    background-color: #f5f5f5;
+    height: 370px;
+    width: 100%;
+    border-radius: 12px;
+    text-align: center;
+    padding: 2rem;
+}
+.purple-header{
+    font-size: 18px;
+    color: #6D7993;
+    font-weight: 600;
+}
+.b1{
+    color: #5e5e5e;
+}
